@@ -8,12 +8,12 @@ namespace ConsoleApplication2
 {
    internal class Program
    {
-      private const int CountArrays = 64;
-      private const int StartArraySize = 512 * 1024;
-      private const int MaxArraySize = 3 * 512 * 1024;
-      private const int StepsCount = 4;
+       private const int CountArrays = 128; //Количество сравниваемых тестовых наборов
+       private const int StartArraySize = 1; //Стартовый размер тестового набора
+       private const int MaxArraySize = 512 * 1024; //Максимальный размер тестового набора
+       private const int StepsCount = 25; //Количество шагов
 
-      private const int MeasurementsCount = 10;
+       private const int MeasurementsCount = 10; //Количество измерений
 
       private static byte[][] s_arrays;
       private static Stopwatch s_stopwatch;
@@ -99,20 +99,19 @@ namespace ConsoleApplication2
             result.SimplestTime = MeasureComparisonTime(CompareArraysWithSimplestMethod,
                                                         result.SimplestTime,
                                                         measurementNumber);
-            /*
+
             result.SequenceEqualTime = MeasureComparisonTime(CompareArraysWithSequenceEqualMethod,
                                                              result.SequenceEqualTime,
                                                              measurementNumber);
-            */
+
             result.PInvokeTime = MeasureComparisonTime(CompareArraysWithPInvokeMethod,
                                                        result.PInvokeTime,
                                                        measurementNumber);
 
-            /*
             result.IStructuralEquatableTime = MeasureComparisonTime(CompareArraysWithIStructuralEquatableMethod,
                                                                     result.IStructuralEquatableTime,
                                                                     measurementNumber);
-            */
+
             result.UnsafeTime = MeasureComparisonTime(CompareArraysWithUnsafeMethod,
                                                       result.UnsafeTime,
                                                       measurementNumber);
@@ -154,17 +153,13 @@ namespace ConsoleApplication2
 
       private static void PrepareTestData(int p_ArraySize)
       {
-         for (int i = 0; i < CountArrays; i++)
-         {
-            var byteArray = new byte[p_ArraySize];
+          for (int i = 0; i < CountArrays; i++)
+          {
+              var byteArray = new byte[p_ArraySize];
+              byteArray[p_ArraySize / 2] = (byte)(i & 0x000000ff);
 
-            for (int j = 0; j < p_ArraySize; j++)
-            {
-               byteArray[j] = (byte)( (i+j) & 0x000000ff);
-            }
-
-            s_arrays[i] = byteArray;
-         }
+              s_arrays[i] = byteArray;
+          }
       }
 
 
