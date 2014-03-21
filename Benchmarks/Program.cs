@@ -13,9 +13,9 @@ namespace Benchmarks
                 Int32.TryParse(args[0], out sizeOfComparingArrays);
             }
 
-            BenchmarkSettings.Instance.DefaultWarmUpIterationCount = 3;
-            BenchmarkSettings.Instance.DefaultResultIterationCount = 10;
-            BenchmarkSettings.Instance.DetailedMode = false;
+            BenchmarkSettings.Instance.DefaultWarmUpIterationCount = 10;
+            BenchmarkSettings.Instance.DefaultResultIterationCount = 100;
+            BenchmarkSettings.Instance.DetailedMode = true;
 
             var competition = new ByteArrayComparsionBenchmarkCompetition(sizeOfComparingArrays);
             competition.Run();

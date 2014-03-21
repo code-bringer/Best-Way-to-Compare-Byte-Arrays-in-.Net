@@ -24,12 +24,14 @@ namespace Benchmarks
 
         public void Run()
         {
+            PrepareArrays();
+
             var competition = new BenchmarkCompetition();
-            competition.AddTask("Simplest", PrepareArrays, () => CompareBySimplestMethod());
-            competition.AddTask("SequenceEqual", PrepareArrays, () => CompareBySequenceEqualMethod());
-            competition.AddTask("IStructuralEquatable", PrepareArrays, () => CompareByIStructuralEquatableMethod());
-            competition.AddTask("Unsafe", PrepareArrays, () => CompareByUnsafeMethod());
-            competition.AddTask("PInvoke", PrepareArrays, () => CompareByPInvokeMethod());
+            competition.AddTask("Simplest", () => CompareBySimplestMethod());
+            competition.AddTask("SequenceEqual", () => CompareBySequenceEqualMethod());
+            competition.AddTask("IStructuralEquatable", () => CompareByIStructuralEquatableMethod());
+            competition.AddTask("Unsafe", () => CompareByUnsafeMethod());
+            competition.AddTask("PInvoke", () => CompareByPInvokeMethod());
 
             competition.Run();
         }
@@ -37,10 +39,10 @@ namespace Benchmarks
         private void PrepareArrays()
         {
             _firstArray = new byte[_arraySize];
-            _firstArray[_arraySize / 2] = (byte)(10 & 0x000000ff);
+            _firstArray[_arraySize / 2] = (byte)(79 & 0x000000ff);
 
             _secondArray = new byte[_arraySize];
-            _secondArray[_arraySize / 2] = (byte)(10 & 0x000000ff);
+            _secondArray[_arraySize / 2] = (byte)(79 & 0x000000ff);
         }
 
         private bool CompareByIStructuralEquatableMethod()
